@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import createTest from './profile'
 
 const test = createTest()
@@ -19,10 +19,11 @@ export default function App() {
 
 // AAAAA
 function A1({ blue, red, setBlue, setRed }) {
-    useRegisterRender('A1')
+    const blueRef = useRef(null)
+    useRegisterRender('A1', { blueRef })
     return (
         <div>
-            <span>{blue}</span>
+            <span ref={blueRef}>{blue}</span>
             <A2 blue={blue} red={red} />
             <A3 blue={blue} setBlue={setBlue} />
         </div>

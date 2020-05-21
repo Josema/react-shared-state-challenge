@@ -31,9 +31,10 @@ export default function createTest() {
         })
     }
 
-    function start(loops = 100) {
+    function start(loops = 100, randoms = 0) {
         state.startAt = Date.now()
         state.running = true
+        state.randoms = randoms
         while (loops-- > 0) {
             const onClicks = []
             components.forEach((data) => {
@@ -60,6 +61,12 @@ export default function createTest() {
         const renderTime = Date.now()
         data.onClick = onClick
         data.renders += 1
+
+        // expensive
+        for (let n = state.randoms; n > 0; --n) {
+            Math.random()
+        }
+        // expensive
 
         useEffect(() => {
             data.totalRenderTime += Date.now() - renderTime
