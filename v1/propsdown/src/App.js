@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import createTest from './profile'
+import createTest from 'react-shared-state-challenge'
 
 const test = createTest()
 const { useRegisterRender } = test
@@ -84,5 +84,5 @@ const C3 = React.memo(function C3({ setBlue, setRed }) {
         setRed(red)
     }
     useRegisterRender('C3', { onClick })
-    return <div />
+    return <div id="C3"></div>
 })

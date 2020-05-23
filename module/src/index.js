@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-require('@wildpeaks/snapshot-dom')
+import equal from 'fast-deep-equal'
+import getDomTree from './getDomTree'
 
 //https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 function shuffleArray(array) {
@@ -40,7 +41,8 @@ export default function createTest() {
             const onClicks = []
             components.forEach((data) => {
                 if (data.onClick) {
-                    onClicks.push(data)
+                    click(data)
+                    // onClicks.push(data)
                 }
             })
             shuffleArray(onClicks).forEach((data) => click(data))
@@ -62,35 +64,10 @@ export default function createTest() {
         const renderTime = Date.now()
         data.onClick = onClick
         data.renders += 1
-
-        // const snapshot = window.snapshotToJSON(document.getElementById('root'))
-        // if (snapshot.childNodes && data.name === 'A1') {
-        //     console.log(
-        //         'normal',
-        //         state.blue,
-        //         snapshot.childNodes[0].childNodes[0].childNodes[0].childNodes[0]
-        //             .nodeValue
-        //     )
-        // }
-
         useEffect(() => {
             data.totalRenderTime += Date.now() - renderTime
             if (!state.running) {
                 state.endtAt = Date.now()
-            }
-
-            const snapshot = window.snapshotToJSON(
-                document.getElementById('root')
-            )
-            if (snapshot.childNodes && data.name === 'A1') {
-                const value =
-                    snapshot.childNodes[0].childNodes[0].childNodes[0]
-                        .childNodes[0].nodeValue
-                console.log('useEffect', state.blue === value, {
-                    state: state.blue,
-                    dom: value,
-                    ref: blueRef.current.innerHTML,
-                })
             }
         })
     }
@@ -112,3 +89,45 @@ export default function createTest() {
         useRegisterRender,
     }
 }
+
+setTimeout(() => {
+    const r = {
+        type: 'div',
+        children: [
+            {
+                type: 'div',
+                children: [
+                    {
+                        type: 'div',
+                        children: [
+                            { type: 'span', children: ['0'] },
+                            {
+                                type: 'div',
+                                children: [
+                                    { type: 'span', children: ['0'] },
+                                    { type: 'span', children: ['0'] },
+                                ],
+                            },
+                            {
+                                type: 'div',
+                                children: [{ type: 'span', children: ['0'] }],
+                            },
+                        ],
+                    },
+                    {
+                        type: 'div',
+                        children: [
+                            {
+                                type: 'div',
+                                children: [{ type: 'span', children: ['0'] }],
+                            },
+                            { type: 'div', children: [] },
+                        ],
+                    },
+                ],
+            },
+        ],
+    }
+    const tree = getDomTree(document.getElementById('root'))
+    console.log(equal(r, tree), tree)
+}, 1000)
