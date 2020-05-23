@@ -2,15 +2,6 @@ import { useEffect } from 'react'
 import equal from 'fast-deep-equal'
 import getDomTree from './getDomTree'
 
-//https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1))
-        ;[array[i], array[j]] = [array[j], array[i]]
-    }
-    return array
-}
-
 export default function createTest() {
     const components = new Map()
     const state = {
@@ -90,44 +81,11 @@ export default function createTest() {
     }
 }
 
-setTimeout(() => {
-    const r = {
-        type: 'div',
-        children: [
-            {
-                type: 'div',
-                children: [
-                    {
-                        type: 'div',
-                        children: [
-                            { type: 'span', children: ['0'] },
-                            {
-                                type: 'div',
-                                children: [
-                                    { type: 'span', children: ['0'] },
-                                    { type: 'span', children: ['0'] },
-                                ],
-                            },
-                            {
-                                type: 'div',
-                                children: [{ type: 'span', children: ['0'] }],
-                            },
-                        ],
-                    },
-                    {
-                        type: 'div',
-                        children: [
-                            {
-                                type: 'div',
-                                children: [{ type: 'span', children: ['0'] }],
-                            },
-                            { type: 'div', children: [] },
-                        ],
-                    },
-                ],
-            },
-        ],
+//https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[array[i], array[j]] = [array[j], array[i]]
     }
-    const tree = getDomTree(document.getElementById('root'))
-    console.log(equal(r, tree), tree)
-}, 1000)
+    return array
+}

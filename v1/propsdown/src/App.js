@@ -1,19 +1,14 @@
 import React, { useState, useRef } from 'react'
-import createTest from 'react-shared-state-challenge'
-
-const test = createTest()
-const { useRegisterRender } = test
-window.test = test
 
 export default function App() {
     const [blue, setBlue] = useState(0)
     const [red, setRed] = useState(0)
     useRegisterRender('App')
     return (
-        <div>
+        <>
             <A1 blue={blue} red={red} setBlue={setBlue} setRed={setRed} />
             <C1 blue={blue} red={red} setBlue={setBlue} setRed={setRed} />
-        </div>
+        </>
     )
 }
 
