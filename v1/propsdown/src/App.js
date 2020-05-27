@@ -1,24 +1,24 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
+import { useRegisterRender } from 'react-shared-state-challenge'
 
 export default function App() {
     const [blue, setBlue] = useState(0)
     const [red, setRed] = useState(0)
     useRegisterRender('App')
     return (
-        <>
+        <div id="App">
             <A1 blue={blue} red={red} setBlue={setBlue} setRed={setRed} />
             <C1 blue={blue} red={red} setBlue={setBlue} setRed={setRed} />
-        </>
+        </div>
     )
 }
 
 // AAAAA
 function A1({ blue, red, setBlue, setRed }) {
-    const blueRef = useRef(null)
-    useRegisterRender('A1', { blueRef })
+    useRegisterRender('A1')
     return (
-        <div>
-            <span ref={blueRef}>{blue}</span>
+        <div id="A1">
+            <span>{blue}</span>
             <A2 blue={blue} red={red} />
             <A3 blue={blue} setBlue={setBlue} />
         </div>
@@ -28,7 +28,7 @@ function A1({ blue, red, setBlue, setRed }) {
 function A2({ blue, red }) {
     useRegisterRender('A2', {})
     return (
-        <div>
+        <div id="A2">
             <span>{blue}</span>
             <span>{red}</span>
         </div>
@@ -41,7 +41,7 @@ function A3({ blue, setBlue }) {
     }
     useRegisterRender('A3', { onClick })
     return (
-        <div>
+        <div id="A3">
             <span>{blue}</span>
         </div>
     )
@@ -54,7 +54,7 @@ function C1({ blue, red, setBlue, setRed }) {
     }
     useRegisterRender('C1', { onClick })
     return (
-        <div>
+        <div id="C1">
             <C2 blue={blue} red={red} setBlue={setBlue} setRed={setRed} />
             <C3 setBlue={setBlue} setRed={setRed} />
         </div>
@@ -67,7 +67,7 @@ function C2({ blue, red, setBlue, setRed }) {
     }
     useRegisterRender('C2', { onClick })
     return (
-        <div>
+        <div id="C2">
             <span>{red}</span>
         </div>
     )

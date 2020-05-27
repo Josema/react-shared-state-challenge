@@ -1,48 +1,69 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import createTest from 'react-shared-state-challenge'
-import createApp from './App'
+// import React from 'react'
+// import ReactDOM from 'react-dom'
 
-const tree2 = {
-    A1: [
-        {
-            div: [],
-            div: [{ span: '0' }],
-        },
-    ],
-}
+import {
+    // createTest,
+    // getTree,
+    createDynamicProp,
+    updateTree,
+} from 'react-shared-state-challenge'
+// import App from './App'
 
+// https://blog.isquaredsoftware.com/2020/05/blogged-answers-a-mostly-complete-guide-to-react-rendering-behavior/
 const tree = {
+    id: 'root',
     type: 'div',
     children: [
         {
+            id: 'App',
             type: 'div',
             children: [
                 {
+                    id: 'A1',
                     type: 'div',
                     children: [
-                        { type: 'span', children: ['0'] },
+                        { type: 'span', children: [createDynamicProp('blue')] },
                         {
+                            id: 'A2',
                             type: 'div',
                             children: [
-                                { type: 'span', children: ['0'] },
-                                { type: 'span', children: ['0'] },
+                                {
+                                    type: 'span',
+                                    children: [createDynamicProp('blue')],
+                                },
+                                {
+                                    type: 'span',
+                                    children: [createDynamicProp('red')],
+                                },
                             ],
                         },
                         {
+                            id: 'A3',
                             type: 'div',
-                            children: [{ type: 'span', children: ['0'] }],
+                            children: [
+                                {
+                                    type: 'span',
+                                    children: [createDynamicProp('blue')],
+                                },
+                            ],
                         },
                     ],
                 },
                 {
+                    id: 'C1',
                     type: 'div',
                     children: [
                         {
+                            id: 'C2',
                             type: 'div',
-                            children: [{ type: 'span', children: ['0'] }],
+                            children: [
+                                {
+                                    type: 'span',
+                                    children: [createDynamicProp('red')],
+                                },
+                            ],
                         },
-                        { type: 'div', children: [] },
+                        { id: 'C3', type: 'div', children: [] },
                     ],
                 },
             ],
@@ -50,13 +71,17 @@ const tree = {
     ],
 }
 
-const element = document.getElementById('root')
-const { useRegisterRender } = createTest({
-    component: createApp,
-    element,
-    tree,
-})
+// console.log({ tree })
+console.log(updateTree(tree, { red: 'leeeed', blue: 'bleeeed' }))
+console.log(updateTree(tree, { red: 'RED', blue: 'BLUE' }))
 
-const App = createApp({ useRegisterRender })
+// const element = document.getElementById('root')
+// const { match } = createTest({
+//     testId: 'prowsdown',
+//     element,
+// })
+// setTimeout(() => {
+//     match({ element, tree })
+// }, 1000)
 
-ReactDOM.render(<App />, element)
+// ReactDOM.render(<App />, element)
